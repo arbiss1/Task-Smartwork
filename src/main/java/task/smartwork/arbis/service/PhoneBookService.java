@@ -6,6 +6,7 @@ import task.smartwork.arbis.domain.PhoneBook;
 import task.smartwork.arbis.repository.PhoneBookRepository;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,6 +23,7 @@ public class PhoneBookService {
     public void deletePhoneBook(PhoneBook phoneBook) {
         phoneBookRepository.deleteById(phoneBook.getId());
     }
+
 
     public PhoneBook findById(long id) {
         return phoneBookRepository.findById(id);

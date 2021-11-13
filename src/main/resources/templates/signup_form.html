@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Sign up</title>
+    <script src="https://use.fontawesome.com/your-embed-code.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="pwstrength.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+    . html {
+  background-color: #56baed;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+a {
+  color: #92badd;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display:inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+}
+
+
+
+/* STRUCTURE */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+
+
+/* TABS */
+
+h2.inactive {
+  color: #cccccc;
+}
+
+h2.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #5fbae9;
+}
+
+
+
+/* FORM TYPOGRAPHY*/
+
+input[type=button], input[type=submit], input[type=reset]  {
+  background-color: #56baed;
+  border: none;
+  color: white;
+  padding: 10px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+  background-color: #39ace7;
+}
+
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+input[type=text] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+input[type=password] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type=text]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[type=text]:placeholder {
+  color: #cccccc;
+}
+input[type=password]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[type=password]:placeholder {
+  color: #cccccc;
+}
+
+
+
+/* ANIMATIONS */
+
+
+
+
+/* Simple CSS3 Fade-in Animation */
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #0d0d0d;
+}
+
+.underlineHover:hover:after{
+  width: 100%;
+}
+/* OTHERS */
+
+*:focus {
+    outline: none;
+}
+
+i{
+font-size: 50px;
+    padding: 15px;
+}
+.divNav{
+ padding:0;
+}
+.nav_logo{
+background-color:black;
+padding:25px;
+border-bottom:1px solid lightgrey;
+}
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px; }
+
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  width:100%;
+  max-width:105px;
+  text-align:center;
+  color:black;
+  background: transparent;
+  border: 2px solid #888;
+  display:inline;
+  -ms-transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  &:hover{
+    background:black;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+    box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+  }
+}
+
+.file-upload input.file-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  height:100%;
+}
+.containers{
+  position:relative;
+  max-width: 320px;
+  margin: auto;
+  .imageWrapper{
+    border: 3px solid #888;
+    width:70%;
+    padding-bottom:70%;
+    border-radius:50%;
+    overflow:hidden;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    img{
+      border-radius: 200px;
+    width: 25%;
+      width:initial;
+      max-height:100%;
+      max-width: initial;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <i class="fab fa-jedi-order"></i>
+                <h3>Sign Up</h3>
+                <span style = "color:red;" id = "nonUniqueUsername" th:if="${nonUniqueUsername}" th:text = "${nonUniqueUsername}"></span>
+                <span id = "message"></span>
+                    <span th:if="${message}" th:text="${message}"></span>
+                <span id = "Emessage"></span>
+            </div>
+            <!-- Login Form -->
+
+            <form th:action="@{/phoneBook/process_register}" th:object="${user}"
+                  method="post">
+                <input class="fadeIn" th:id ="userEmail" type="text" th:field="*{username}" id = "username"
+                       placeholder = "Username..."/>
+                <input class="fadeIn"  type="password" onkeyup="return passwordChanged();"  th:field="*{password}"
+                       id="password" name="password"  placeholder = "Password...">
+                <span th:errorclass="error"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <input class="fadeIn"  type="password"
+                       id = "passwordConfirm"  placeholder = "Confirm Password..."/>
+                <input class="fadeIn"  id = "firstname"  type="text" th:field="*{name.firstName}"
+                       minlength="2" maxlength="20" placeholder = "First Name..."/>
+                <input class="fadeIn"  type="text" id="lastname" th:field="*{name.lastName}"
+                       minlength="2" maxlength="20" placeholder = "Last Name..."/>
+                <input class="fadeIn"  type="text" th:field="*{type}" id="type"
+                       minlength="2" maxlength="20" placeholder = "Type of number..."/>
+                <input class="fadeIn"  type="text" th:field="*{number}" id="phonenumber"
+                       minlength="2" maxlength="20" placeholder = "Phone number..."/>
+                <input type="submit" id="submit" class="fadeIn fourth" value="Sign up">
+            </form>
+            <div id="formFooter">
+                <p>Already have an account? <a class="underlineHover" href="/login">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <script language="javascript">
+   $(function () {
+        $("#submit").click(function () {
+            var password = $("#password").val();
+            var confirmPassword = $("#passwordConfirm").val();
+            var nonUniqueUsername = $("#nonUniqueUsername").val();
+            var message =  $("#message");
+            if (password != confirmPassword && nonUniqueUsername == null) {
+                 message.html("Password don't match !").css('color','red');
+                return false;
+            }
+            return true;
+        });
+    })
+
+    $('.file-input').change(function(){
+    var curElement = $(this).parent().parent().find('.image');
+    console.log(curElement);
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        curElement.attr('src', e.target.result);
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+$(document).ready(function () {
+    options = {
+        common: {minChar:8},
+        ui: {
+            showVerdictsInsideProgressBar:true,
+            showErrors:true,
+            errorMessages:{
+                wordLength: '<spring:message code="error.wordLength"/>',
+                wordNotEmail: '<spring:message code="error.wordNotEmail"/>',
+                wordSequences: '<spring:message code="error.wordSequences"/>',
+                wordLowercase: '<spring:message code="error.wordLowercase"/>',
+                wordUppercase: '<spring:message code="error.wordUppercase"/>',
+                wordOneNumber: '<spring:message code="error.wordOneNumber"/>',
+                wordOneSpecialChar: '<spring:message code="error.wordOneSpecialChar"/>'
+            }
+        }
+    };
+});
+</script>
+</body>
+</html>
