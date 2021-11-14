@@ -11,7 +11,6 @@ import task.smartwork.arbis.repository.PhoneBookRepository;
 import task.smartwork.arbis.service.NameService;
 import org.springframework.web.bind.annotation.*;
 import task.smartwork.arbis.service.PhoneBookService;
-
 import java.util.List;
 
 
@@ -30,7 +29,7 @@ public class RestController {
 
 
 
-    @PostMapping(value = "/phoneBook/createPhoneBook")
+    @PostMapping("/phoneBook/createPhoneBook")
     public ResponseEntity<PhoneBook> createPhoneBook (@RequestBody PhoneBook phoneBook) throws Exception {
 
         if(phoneBook.getType().equals("Work") || phoneBook.getType().equals("Cellphone") || phoneBook.getType().equals("Home")){
@@ -78,22 +77,74 @@ public class RestController {
             return new ResponseEntity("Type must be {Work , Cellphone or Home}",HttpStatus.BAD_REQUEST);
         }
     }
+//finished CRUD API
 
-    //building simple user interface
+    //this is where I start building user interface
+    // user interface endpoints
     @GetMapping("/dashboard")
-        public ModelAndView getPhoneBookInfo(Model model){
-            ModelAndView mav = new ModelAndView("index");
-            List<PhoneBook> listOfPhoneBooks = phoneBookRepository.findAll();
-            model.addAttribute("listOfPhoneBooks",listOfPhoneBooks);
-            return mav;
+    public ModelAndView getPhoneBookInfo(Model model,PhoneBook phoneBook){
+        ModelAndView mav = new ModelAndView("index");
+        List<PhoneBook> listOfPhoneBooks = phoneBookRepository.findAll();
+        model.addAttribute("phoneBook",phoneBook);
+        model.addAttribute("listOfPhoneBooks",listOfPhoneBooks);
+        return mav;
     }
-    //builidng CRUD logic same as the API , but in this case we will include
-    // a PathVariable or ModelAttribute and return a view not JSON.
-    @RequestMapping("/deletePhoneBookById/{id}")
-    public ModelAndView deletePhoneBookById(@PathVariable long id,Model model){
-            ModelAndView mav = new ModelAndView("redirect:/dashboard");
+
+
+    @GetMapping("/deletePhoneBookById/{id}")
+    public ModelAndView deletePhoneBookById(@PathVariable long id){
+        ModelAndView mav = new ModelAndView("redirect:/dashboard");
         PhoneBook deletePhoneBook = phoneBookRepository.findById(id);
         phoneBookService.deletePhoneBook(deletePhoneBook);
         return mav;
     }
+
+    //edit phoneBook
+    @PostMapping("/editPhoneBook/{id}")
+    public ModelAndView editPhoneBook(@PathVariable(name = "id") long id,PhoneBook phoneBook){
+        ModelAndView mav = new ModelAndView("editPhoneBook");
+        ModelAndView mav2 = new ModelAndView("redirect:/dashboard");
+        mav.addObject("phoneBook", phoneBook);
+        if(phoneBook.getType().equals("Work") || phoneBook.getType().equals("Cellphone") || phoneBook.getType().equals("Home")){
+            PhoneBook editPhoneBook = phoneBookRepository.findById(phoneBook.getId());
+            if(editPhoneBook == null) {
+                mav.addObject("messageError","Error phone book is null");
+                return mav;
+            }
+            editPhoneBook.setName(phoneBook.getName());
+            editPhoneBook.setType(phoneBook.getType());
+            editPhoneBook.setNumber(phoneBook.getNumber());
+            phoneBookService.savePhoneBook(editPhoneBook);
+            return mav2;
+        }
+        return mav;
+    }
+
+    @GetMapping("/editPhoneBook/{id}")
+    public ModelAndView showEditPage(@PathVariable(name = "id") long id,Model model){
+        ModelAndView mav = new ModelAndView("editPhoneBook");
+        PhoneBook phoneBook = phoneBookService.findById(id);
+        mav.addObject("phoneBook", phoneBook);
+        return mav;
+    }
+
+
+    @PostMapping("/savePhoneBook")
+    public ModelAndView savePhoneBook (PhoneBook phoneBook) throws Exception {
+        ModelAndView mav = new ModelAndView("redirect:/dashboard");
+        if(phoneBook.getType().equals("Work") || phoneBook.getType().equals("Cellphone") || phoneBook.getType().equals("Home")){
+            phoneBook.setType(phoneBook.getType());
+        }
+        //save name
+        nameService.saveName(phoneBook);
+
+        //save phoneBook
+        PhoneBook newPhoneBook = new PhoneBook();
+        newPhoneBook.setName(phoneBook.getName());
+        newPhoneBook.setNumber(phoneBook.getNumber());
+        newPhoneBook.setType(phoneBook.getType());
+        phoneBookService.savePhoneBook(newPhoneBook);
+        return mav;
+    }
+
 }

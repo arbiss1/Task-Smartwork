@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface NameRepository extends JpaRepository<Name,Long> {
 
-    List<Name> findByFirstName(String firstName);
 }

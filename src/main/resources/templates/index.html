@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:th="http://www.thymeleaf.org">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -9,11 +8,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel = "stylesheet" th:href = "@{/styles/stylesheet1.css}">
-<script type = "text/javascript" th:src = "@{/styles/scripts.js}"></script>
-<script type = "text/javascript" th:src = "@{/styles/sweetaler.js}"></script>
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
@@ -62,9 +56,41 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
     <div align="center" style="margin-top:5%;">
         <h1>Phone Book Storage</h1>
         <div>
-            <form th:action="@{/new}" method="post">
-                <button class="btn btn-primary">Create New Phone Book</button>
-            </form>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#triggerModal">
+                Add new Phone Book
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="triggerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" th:action="@{/savePhoneBook}" th:object="${phoneBook}"
+                                  method="post">
+                                <label>First Name:</label>
+                                <input  class="form-control" type="text" th:field="*{name.firstName}" th:id = "firstName"  required/>
+                                <label>Last Name:</label>
+                                <input  class="form-control" type="text" th:field="*{name.lastName}" th:id = "lastName"  required/>
+                                <label>Number:</label>
+                                <input  class="form-control" type="text" th:field="*{number}" th:id = "number"  required/>
+                                <label>Type:</label>
+                                <select id = "dropDown"  required class="selectNew form-control" th:object = "${phoneBook}" th:field = "*{type}">
+                                    <option selected disabled th:value = "null">~~Chose an option~~</option>
+                                    <option th:text = "Work" th:value = "Work">
+                                    <option th:text = "Cellphone" th:value = "Cellphone">
+                                    <option th:text = "Home" th:value = "Home">
+                                </select>
+                                <button style="margin-top:10px;" type="submit" class="btn btn-primary">Save changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <br/><br/>
         <table border="1" cellpadding="10" style="width:71%" class="table"
@@ -85,11 +111,11 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 <td th:text="${pb.number}">Address</td>
                 <td th:text="${pb.type}">Phone Number</td>
                 <td>
-<!--                    <div>-->
-<!--                        <a th:href="@{'/edit/' + ${pb.id}}">Edit</a>/phoneBook/deletePhoneBookById/{id}-->
-<!--                    </div>-->
                     <br>
                     <div>
+                        <div>
+                            <a th:href="@{'/editPhoneBook/' + ${pb.id}}">Edit</a>
+                        </div>
                         <a style="cursor:pointer"
                              th:onclick="|deleteOrder(${pb.id});|" class='show-example-btn'>
                             Delete
@@ -100,10 +126,6 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </tbody>
         </table>
     </div>
-
-<!--    <button class='show-example-btn' data-swal-template='#my-template'>-->
-<!--        Trigger modal-->
-<!--    </button>-->
 </main>
 <script>
 $(document).ready(() => $('#table').DataTable());
